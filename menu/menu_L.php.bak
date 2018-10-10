@@ -1,0 +1,102 @@
+ 
+ <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header"></li><!-- ใส่ชื่อหัวข้อเมนู ถ้าต้องการ -->
+        <li class="active">
+          <a href="indexdrupal.php">
+            <i class="fa fa-home"></i> <span>หน้าหลัก</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-blue">628</small>
+            </span>
+          </a>
+        </li>
+        <!-- <li class="treeview">
+          <a href="#">
+            <i class="fa fa-plus-square"></i> <span>ขอบ้านพัก</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#"><i class="fa fa-circle-o"></i> รับครุภัณฑ์</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> เบิกครุภัณฑ์</a></li>
+          </ul>
+        </li>
+        
+         <li class="treeview">
+          <a href="#">
+            <i class="fa fa-sign-in"></i> <span>งานรับ(หน่วยงาน)</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-red">0</small>
+            </span>
+          </a>
+        </li>
+       
+        <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>Layout Options</span>
+            <span class="pull-right-container">
+              <span class="label label-primary pull-right">4</span>
+            </span>
+          </a>
+         -->
+         <li><a href="#"><i class="fa fa-wrench"></i> <span>ขอบ้านพัก</span></a></li>
+        
+        <li><a href="#"><i class="fa fa-exchange"></i> <span>งานโอน-คืน</span></a></li>
+        
+        <li><a href="#"><i class="fa fa-random"></i> <span>งานยืม-คืน</span></a></li>
+        
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-group"></i><span>งานพัสดุ</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#"><i class="fa fa-circle-o"></i> ตรวจรับการโอน</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> จำหน่าย</a></li>
+          </ul>
+        </li>
+        
+        <li><a href="#"><i class="fa fa-history"></i> <span>ประวัติ</span></a></li>
+        
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-files-o"></i> <span>รายงาน</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#"><i class="fa fa-circle-o"></i> การซื้อครุภัณฑ์</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> ครุภัณฑ์หน่วยงาน</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> ทะเบียนครุภัณฑ์</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> ครุภัณฑ์ต่ำกว่าเกณฑ์</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> ประวัติการซ่อม</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> สินทรัพย์</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> การซื้อจากบริษัท</a></li>
+          </ul>
+        </li>
+        
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-gears"></i><span>งานควบคุม</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+          	<li><a href="#"><i class="fa fa-circle-o"></i> ผู้ดูแลครุภัณฑ์หน่วยงาน</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> หน่วยงานนอกรพ.</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> เลขที่สธ.หน่วยงาน</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> รายชื่อผู้ตรวจสอบ</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> บริษัท/ห้าง/ร้าน</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> หมวดครุภัณฑ์</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> ผู้บริจาค</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> ฯลฯ</a></li>
+          </ul>
+        </li>
+        
+      </ul>
+    
