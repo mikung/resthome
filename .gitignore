@@ -1,3 +1,7 @@
-assets/
+bower_components/
 .idea/
 css/
+dist/
+documentation/
+lip/
+plugins/
