@@ -1,6 +1,10 @@
-bower_components/
+
 .idea/
+bower_components/
+build/
+class.upload.php-master/
 css/
+database/
 dist/
 documentation/
 lip/
