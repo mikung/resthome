@@ -929,7 +929,7 @@ WHERE rb.groupJID = 5 and rb.br_status in ('0','1')
             $.ajax({
                 url:'update_br.php',
                 method:'POST',
-                data:{id:this.id,action:2},
+                data:{id:this.id,action:3},
                 success:function (data) {
                     console.log(data);
                     if(data == 1){
@@ -947,7 +947,7 @@ WHERE rb.groupJID = 5 and rb.br_status in ('0','1')
             $.ajax({
                 url:'update_br.php',
                 method:'POST',
-                data:{id:this.id,action:2},
+                data:{id:this.id,action:4},
                 success:function (data) {
                     console.log(data);
                     if(data == 1){
@@ -965,7 +965,7 @@ WHERE rb.groupJID = 5 and rb.br_status in ('0','1')
             $.ajax({
                 url:'update_br.php',
                 method:'POST',
-                data:{id:this.id,action:3},
+                data:{id:this.id,action:5},
                 success:function (data) {
                     console.log(data);
                     if(data == 1){
