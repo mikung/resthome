@@ -5,7 +5,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                จัดการบ้านพักออนไลน์ test
+                จัดการบ้านพักออนไลน์ test test2
                 <small>(<?php $classTM->departName($_SESSION["departID"]); ?>)</small>
             </h1>
             <ol class="breadcrumb">
