@@ -1016,7 +1016,7 @@ WHERE rb.groupJID = 5 and rb.br_status in ('2','4')
             //     }
             // })
         });
-        $('.approve_br').on('click',function () {
+        $('.welcome_br').on('click',function () {
             //alert(this.id);
             $.ajax({
                 url:'update_br.php',
