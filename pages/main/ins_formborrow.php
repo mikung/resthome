@@ -17,7 +17,7 @@ $amphur = $_POST['amphur'];
 $tambon = $_POST['tambon'].'';
 $mobile = $_POST['mobile'];
 $remark_br = $_POST['remark_br'];
-$borrow_date = date('Y-m-d');
+$borrow_date = date('Y-m-d H:i:s');
 $groupJID = $_POST['groupJName'];
 //echo $_POST['groupName'];
 $sql = "insert into borrowhome (ID_Personnal,salary,typef_id,typehome,zone_id,reghome_id,address,province,amphur,tambon,mobile,remark_br,borrow_date,groupJID,br_status)

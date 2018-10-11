@@ -82,7 +82,7 @@ FROM
 	JOIN mainlogin.prename mpn ON mp.ID_Prename = mpn.ID_Prename
 	left join	resthome.typefamily rf on rf.typef_id = rb.typef_id
 	left join resthome.resgisterhome rh on rh.reghome_id = rb.reghome_id
-WHERE rb.groupJID = 1 and rb.br_status in ('2','3')
+WHERE rb.groupJID = 1 and rb.br_status in ('2','4')
 ";
                                                         $results = $mysql->selectAll($sql);
 
@@ -157,13 +157,9 @@ WHERE rb.groupJID = 1 and rb.br_status in ('2','3')
                                                                         if($value['br_status'] == 2){
                                                                             echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-warning select_br">เลือกบ้าน</button>
                                                                         <button type="button" id="'.$value['brhome_id'].'" class="btn btn-danger cancer_br">ยกเลิก</button>';
-                                                                        }else if ($value['br_status'] == 3){
-                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-warning welcome_br">รับเข้าบ้าน</button>
-                                                                    <button type="button" id="'.$value['brhome_id'].'" class="btn btn-info cancer_br">ยกเลิก</button>';
                                                                         }else if ($value['br_status'] == 4){
-                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-info select_br">รับเข้าบ้าน</button>';
-                                                                        }else{
-
+                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-info welcome_br">รับเข้าบ้าน</button>
+                                                                    <button type="button" id="'.$value['brhome_id'].'" class="btn btn-danger cancer_br">ยกเลิก</button>';
                                                                         }
                                                                         ?>
 
@@ -757,6 +753,62 @@ WHERE rb.groupJID = 5 and rb.br_status in ('0','1')
                 </form>
             </div>
             <!-- /.box-body -->
+            <!--        modal แก้ไขประเภทครอบครัว-->
+            <div class="col-md-12">
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header bg-aqua">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="gridSystemModalLabel">เลือกบ้านพัก</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <input type="hidden" id="br_id" value="">
+                                            <label for="inputEmail3" class="col-md-offset-2 col-md-3 control-label">โซนบ้านพัก</label>
+
+                                            <div class="col-md-7">
+                                                <select class="form-control select2 col-md-12" id="zone_name" name="zone_name" style="width: 200px" required>
+                                                    <option value="">เลือกโซนบ้านพัก</option>
+                                                    <?php
+                                                    //echo $classlouis ->ZoneHome();
+                                                    $mysql = new pdomysqlresthome();
+                                                    $sql = "SELECT zone_id,zone_name FROM zonehome WHERE `isActive` = '1';";
+                                                    $results = $mysql->selectAll($sql);
+
+                                                    foreach ($results as $value) {
+                                                        echo "<option value=" . $value['zone_id'] . " >" . $value['zone_name'] . "</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPassword3" class="col-md-offset-2 col-md-3 control-label">บ้านเลขที่บ้านพัก</label>
+
+                                            <div class="col-md-7">
+
+                                                    <select class="form-control select2" name="reghome_name" id="reghome_name" style="width: 200px" required disabled>
+                                                        <option value="">เลือกบ้านเลขที่</option>
+                                                    </select>
+
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                <button type="button" id="updateborrow" class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+            </div>
     </section>
 </div>
 
@@ -926,28 +978,31 @@ WHERE rb.groupJID = 5 and rb.br_status in ('0','1')
         })
         $('.select_br').on('click',function () {
             //alert(this.id);
-            $.ajax({
-                url:'update_br.php',
-                method:'POST',
-                data:{id:this.id,action:3},
-                success:function (data) {
-                    console.log(data);
-                    if(data == 1){
-                        toastr.success('รับเอกสารเรียบร้อยแล้วค่ะ');
-                        setInterval(function(){ location.reload(); }, 2000);
-
-                    }else{
-                        toastr.success('รับเอกสารมีปัญหาติดต่อผู้พัฒนาระบบค่ะ');
-                    }
-                }
-            })
+            $('#br_id').val(this.id);
+            //alert($('#br_id').val());
+            $('#myModal').modal('show');
+            // $.ajax({
+            //     url:'update_br.php',
+            //     method:'POST',
+            //     data:{id:this.id,action:4}, //br_status 4 เลือกบ้านเสร็จแล้ว
+            //     success:function (data) {
+            //         console.log(data);
+            //         if(data == 1){
+            //             toastr.success('รับเอกสารเรียบร้อยแล้วค่ะ');
+            //             setInterval(function(){ location.reload(); }, 2000);
+            //
+            //         }else{
+            //             toastr.success('รับเอกสารมีปัญหาติดต่อผู้พัฒนาระบบค่ะ');
+            //         }
+            //     }
+            // })
         });
         $('.approve_br').on('click',function () {
             //alert(this.id);
             $.ajax({
                 url:'update_br.php',
                 method:'POST',
-                data:{id:this.id,action:4},
+                data:{id:this.id,action:5}, //br_status 5 รับเข้าบ้านเสร็จแล้ว
                 success:function (data) {
                     console.log(data);
                     if(data == 1){
@@ -965,7 +1020,7 @@ WHERE rb.groupJID = 5 and rb.br_status in ('0','1')
             $.ajax({
                 url:'update_br.php',
                 method:'POST',
-                data:{id:this.id,action:5},
+                data:{id:this.id,action:6}, //br_status 6 ยกเลิกรอบ้าน
                 success:function (data) {
                     console.log(data);
                     if(data == 1){
@@ -978,8 +1033,73 @@ WHERE rb.groupJID = 5 and rb.br_status in ('0','1')
                 }
             })
         });
+        $(document).on('click', '.update', function () {
+            //alert(this.id);
+            $.ajax({
+                url:'get_id_typefamily.php',
+                method:'POST',
+                data:{id:this.id},
+                datatype:'JSON',
+                success:function (data) {
+                    // console.log(data.typef_name);
+                    $('#typef_name1').val(data.typef_name);
+                    $('#isActive1').val(data.isActive);
+                    $('#typef_id').val(data.typef_id);
+                }
+            })
+            $('#myModal').modal('show');
 
+        });
+        $('#zone_name').change(function () {
+            $('#reghome_name').removeAttr('disabled');
+            $('#reghome_name')
+                .find('option')
+                .remove()
+                .end()
+                .append('<option value="">--เลือกบ้านเลขที่--</option>')
+                .val('');
 
+            //console.log($('#province').find('option:selected').text());
+            //$('#province_text').val($('#province').find('option:selected').text());
+            //console.log($('#province_text').val());
+        });
+        $('#reghome_name').select2({
+            ajax: {
+                url: 'get_reghome_name_borrow.php',
+                dataType: 'json',
+                data: function (params) {
+                    if (params.term == undefined) {
+                        params.term = '';
+                    }
+                    var query = {
+                        search: params.term,
+                        type: 'public',
+                        zone: $('#zone_name').val()
+                    }
+                    console.log(query);
+                    // Query parameters will be ?search=[term]&type=public
+                    return query;
+                }
+            }
+        });
+        $(document).on('click','#updateborrow',function () {
+            // alert($('#br_id').val());
+            $.ajax({
+                url:'update_borrow_zonenew.php',
+                method:'POST',
+                data:{br_id:$('#br_id').val(),zone_id:$('#zone_name').val(),reghome_id:$('#reghome_name').val()},
+                datatype:'JSON',
+                success:function (data) {
+                    // console.log(data.typef_name);
+                     console.log(data);
+                    toastr.success('บันทึกข้อมูลเรียบร้อยแล้วค่ะ');
+                    setInterval(function(){ location.reload(); }, 2000);
+                    //cleardata();
+                    // table.ajax.reload();
+                }
+            })
+            $('#myModal').modal('hide');
+        });
     });
 </script>
 <script>
