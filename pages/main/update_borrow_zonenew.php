@@ -17,6 +17,9 @@ $sql = "update borrowhome set zone_new = '$zone_id' ,reghome_new = '$reghome_id'
 //exit();
 $results = $mysql->updateData($sql);
 
+$sqlupdate = "update registerhome set status = 'N' where reghome_id = '$reghome_id'";
+$query = $mysql->updateData($sqlupdate);
+
 //echo json_encode($results);
 //print_r($_POST);
 echo $results;
