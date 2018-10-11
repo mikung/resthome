@@ -56,7 +56,8 @@
                                                             <th>ประเภทบ้าน</th>
                                                             <th>วันที่ขอบ้าน</th>
                                                             <th>บัานพักปัจจุบัน</th>
-                                                            <th>โซน</th>
+                                                            <th>เหตุผล</th>
+                                                            <th>บ้านพัก</th>
                                                             <th>สมาชิก</th>
                                                             <th>กระบวนการ</th>
                                                         </tr>
@@ -75,6 +76,7 @@ rb.brhome_id,
 	rb.borrow_date,
 	rb.remark_br,
 	rh.reghome_name,
+	rh2.reghome_name as 'reghome_name2',
 	rb.br_status
 FROM
 	resthome.borrowhome rb
@@ -82,6 +84,7 @@ FROM
 	JOIN mainlogin.prename mpn ON mp.ID_Prename = mpn.ID_Prename
 	left join	resthome.typefamily rf on rf.typef_id = rb.typef_id
 	left join resthome.resgisterhome rh on rh.reghome_id = rb.reghome_id
+	left join resthome.resgisterhome rh2 on rh2.reghome_id = rb.reghome_new
 WHERE rb.groupJID = 1 and rb.br_status in ('2','4')
 ";
                                                         $results = $mysql->selectAll($sql);
@@ -97,6 +100,7 @@ WHERE rb.groupJID = 1 and rb.br_status in ('2','4')
                                                                 <td><?= $value['borrow_date'] ?></td>
                                                                 <td><?= $value['reghome_name'] ?></td>
                                                                 <td><?= $value['remark_br'] ?></td>
+                                                                <td><?= $value['reghome_name2'] ?></td>
                                                                 <td> <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default<?=$value['brhome_id']?>">
                                                                         ดูรายชื่อ
                                                                     </button>
@@ -187,7 +191,7 @@ WHERE rb.groupJID = 1 and rb.br_status in ('2','4')
                                             <div class="box-body">
 
                                                 <div class="box-body">
-                                                    <table id="example2" class="table table-bordered table-hover">
+                                                    <table id="example1" class="table table-bordered table-hover">
                                                         <thead>
                                                         <tr>
                                                             <th>#</th>
@@ -195,8 +199,9 @@ WHERE rb.groupJID = 1 and rb.br_status in ('2','4')
                                                             <th>ตำแหน่ง</th>
                                                             <th>ประเภทบ้าน</th>
                                                             <th>วันที่ขอบ้าน</th>
-                                                            <th>บันพักปัจจุบัน</th>
+                                                            <th>บัานพักปัจจุบัน</th>
                                                             <th>เหตุผล</th>
+                                                            <th>บ้านพัก</th>
                                                             <th>สมาชิก</th>
                                                             <th>กระบวนการ</th>
                                                         </tr>
@@ -215,6 +220,7 @@ rb.brhome_id,
 	rb.borrow_date,
 	rb.remark_br,
 	rh.reghome_name,
+	rh2.reghome_name as 'reghome_name2',
 	rb.br_status
 FROM
 	resthome.borrowhome rb
@@ -222,7 +228,8 @@ FROM
 	JOIN mainlogin.prename mpn ON mp.ID_Prename = mpn.ID_Prename
 	left join	resthome.typefamily rf on rf.typef_id = rb.typef_id
 	left join resthome.resgisterhome rh on rh.reghome_id = rb.reghome_id
-WHERE rb.groupJID = 2 and rb.br_status in ('0','1')
+	left join resthome.resgisterhome rh2 on rh2.reghome_id = rb.reghome_new
+WHERE rb.groupJID = 2 and rb.br_status in ('2','4')
 ";
                                                         $results = $mysql->selectAll($sql);
 
@@ -237,6 +244,7 @@ WHERE rb.groupJID = 2 and rb.br_status in ('0','1')
                                                                 <td><?= $value['borrow_date'] ?></td>
                                                                 <td><?= $value['reghome_name'] ?></td>
                                                                 <td><?= $value['remark_br'] ?></td>
+                                                                <td><?= $value['reghome_name2'] ?></td>
                                                                 <td> <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default<?=$value['brhome_id']?>">
                                                                         ดูรายชื่อ
                                                                     </button>
@@ -294,17 +302,17 @@ WHERE rb.groupJID = 2 and rb.br_status in ('0','1')
                                                                 <td>
                                                                     <div>
                                                                         <?php
-                                                                        if($value['br_status'] == 0){
-                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-success receipt_br">รับเอกสาร</button>
-                                                                               <button type="button" id="'.$value['brhome_id'].'" class="btn btn-info cancer_br">ยกเลิก</button>';
-                                                                        }else if ($value['br_status'] == 1){
-                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-warning approve_br">อนุมัติเอกสาร</button>';
-                                                                        }else if ($value['br_status'] == 2){
-                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-info cancer_br">ยกเลิก</button>';
-                                                                        }else{
-
+                                                                        if($value['br_status'] == 2){
+                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-warning select_br">เลือกบ้าน</button>
+                                                                        <button type="button" id="'.$value['brhome_id'].'" class="btn btn-danger cancer_br">ยกเลิก</button>';
+                                                                        }else if ($value['br_status'] == 4){
+                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-info welcome_br">รับเข้าบ้าน</button>
+                                                                    <button type="button" id="'.$value['brhome_id'].'" class="btn btn-danger cancer_br">ยกเลิก</button>';
                                                                         }
                                                                         ?>
+
+
+
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -326,7 +334,7 @@ WHERE rb.groupJID = 2 and rb.br_status in ('0','1')
                                             <div class="box-body">
 
                                                 <div class="box-body">
-                                                    <table id="example3" class="table table-bordered table-hover">
+                                                    <table id="example1" class="table table-bordered table-hover">
                                                         <thead>
                                                         <tr>
                                                             <th>#</th>
@@ -334,8 +342,9 @@ WHERE rb.groupJID = 2 and rb.br_status in ('0','1')
                                                             <th>ตำแหน่ง</th>
                                                             <th>ประเภทบ้าน</th>
                                                             <th>วันที่ขอบ้าน</th>
-                                                            <th>บันพักปัจจุบัน</th>
+                                                            <th>บัานพักปัจจุบัน</th>
                                                             <th>เหตุผล</th>
+                                                            <th>บ้านพัก</th>
                                                             <th>สมาชิก</th>
                                                             <th>กระบวนการ</th>
                                                         </tr>
@@ -354,6 +363,7 @@ rb.brhome_id,
 	rb.borrow_date,
 	rb.remark_br,
 	rh.reghome_name,
+	rh2.reghome_name as 'reghome_name2',
 	rb.br_status
 FROM
 	resthome.borrowhome rb
@@ -361,7 +371,8 @@ FROM
 	JOIN mainlogin.prename mpn ON mp.ID_Prename = mpn.ID_Prename
 	left join	resthome.typefamily rf on rf.typef_id = rb.typef_id
 	left join resthome.resgisterhome rh on rh.reghome_id = rb.reghome_id
-WHERE rb.groupJID = 3 and rb.br_status in ('0','1')
+	left join resthome.resgisterhome rh2 on rh2.reghome_id = rb.reghome_new
+WHERE rb.groupJID = 3 and rb.br_status in ('2','4')
 ";
                                                         $results = $mysql->selectAll($sql);
 
@@ -376,6 +387,7 @@ WHERE rb.groupJID = 3 and rb.br_status in ('0','1')
                                                                 <td><?= $value['borrow_date'] ?></td>
                                                                 <td><?= $value['reghome_name'] ?></td>
                                                                 <td><?= $value['remark_br'] ?></td>
+                                                                <td><?= $value['reghome_name2'] ?></td>
                                                                 <td> <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default<?=$value['brhome_id']?>">
                                                                         ดูรายชื่อ
                                                                     </button>
@@ -433,17 +445,17 @@ WHERE rb.groupJID = 3 and rb.br_status in ('0','1')
                                                                 <td>
                                                                     <div>
                                                                         <?php
-                                                                        if($value['br_status'] == 0){
-                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-success receipt_br">รับเอกสาร</button>
-                                                                            <button type="button" id="'.$value['brhome_id'].'" class="btn btn-info cancer_br">ยกเลิก</button>';
-                                                                        }else if ($value['br_status'] == 1){
-                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-warning approve_br">อนุมัติเอกสาร</button>';
-                                                                        }else if ($value['br_status'] == 2){
-                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-info cancer_br">ยกเลิก</button>';
-                                                                        }else{
-
+                                                                        if($value['br_status'] == 2){
+                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-warning select_br">เลือกบ้าน</button>
+                                                                        <button type="button" id="'.$value['brhome_id'].'" class="btn btn-danger cancer_br">ยกเลิก</button>';
+                                                                        }else if ($value['br_status'] == 4){
+                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-info welcome_br">รับเข้าบ้าน</button>
+                                                                    <button type="button" id="'.$value['brhome_id'].'" class="btn btn-danger cancer_br">ยกเลิก</button>';
                                                                         }
                                                                         ?>
+
+
+
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -465,7 +477,7 @@ WHERE rb.groupJID = 3 and rb.br_status in ('0','1')
                                             <div class="box-body">
 
                                                 <div class="box-body">
-                                                    <table id="example4" class="table table-bordered table-hover">
+                                                    <table id="example1" class="table table-bordered table-hover">
                                                         <thead>
                                                         <tr>
                                                             <th>#</th>
@@ -475,6 +487,7 @@ WHERE rb.groupJID = 3 and rb.br_status in ('0','1')
                                                             <th>วันที่ขอบ้าน</th>
                                                             <th>บัานพักปัจจุบัน</th>
                                                             <th>เหตุผล</th>
+                                                            <th>บ้านพัก</th>
                                                             <th>สมาชิก</th>
                                                             <th>กระบวนการ</th>
                                                         </tr>
@@ -493,6 +506,7 @@ rb.brhome_id,
 	rb.borrow_date,
 	rb.remark_br,
 	rh.reghome_name,
+	rh2.reghome_name as 'reghome_name2',
 	rb.br_status
 FROM
 	resthome.borrowhome rb
@@ -500,7 +514,8 @@ FROM
 	JOIN mainlogin.prename mpn ON mp.ID_Prename = mpn.ID_Prename
 	left join	resthome.typefamily rf on rf.typef_id = rb.typef_id
 	left join resthome.resgisterhome rh on rh.reghome_id = rb.reghome_id
-WHERE rb.groupJID = 4 and rb.br_status in ('0','1')
+	left join resthome.resgisterhome rh2 on rh2.reghome_id = rb.reghome_new
+WHERE rb.groupJID = 4 and rb.br_status in ('2','4')
 ";
                                                         $results = $mysql->selectAll($sql);
 
@@ -515,6 +530,7 @@ WHERE rb.groupJID = 4 and rb.br_status in ('0','1')
                                                                 <td><?= $value['borrow_date'] ?></td>
                                                                 <td><?= $value['reghome_name'] ?></td>
                                                                 <td><?= $value['remark_br'] ?></td>
+                                                                <td><?= $value['reghome_name2'] ?></td>
                                                                 <td> <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default<?=$value['brhome_id']?>">
                                                                         ดูรายชื่อ
                                                                     </button>
@@ -572,17 +588,17 @@ WHERE rb.groupJID = 4 and rb.br_status in ('0','1')
                                                                 <td>
                                                                     <div>
                                                                         <?php
-                                                                        if($value['br_status'] == 0){
-                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-success receipt_br">รับเอกสาร</button>
-                                                                        <button type="button" id="'.$value['brhome_id'].'" class="btn btn-info cancer_br">ยกเลิก</button>';
-                                                                        }else if ($value['br_status'] == 1){
-                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-warning approve_br">อนุมัติเอกสาร</button>';
-                                                                        }else if ($value['br_status'] == 3){
-                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-info select_br">เลือกบ้าน</button>';
-                                                                        }else{
-
+                                                                        if($value['br_status'] == 2){
+                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-warning select_br">เลือกบ้าน</button>
+                                                                        <button type="button" id="'.$value['brhome_id'].'" class="btn btn-danger cancer_br">ยกเลิก</button>';
+                                                                        }else if ($value['br_status'] == 4){
+                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-info welcome_br">รับเข้าบ้าน</button>
+                                                                    <button type="button" id="'.$value['brhome_id'].'" class="btn btn-danger cancer_br">ยกเลิก</button>';
                                                                         }
                                                                         ?>
+
+
+
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -604,7 +620,7 @@ WHERE rb.groupJID = 4 and rb.br_status in ('0','1')
                                             <div class="box-body">
 
                                                 <div class="box-body">
-                                                    <table id="example5" class="table table-bordered table-hover">
+                                                    <table id="example1" class="table table-bordered table-hover">
                                                         <thead>
                                                         <tr>
                                                             <th>#</th>
@@ -612,8 +628,9 @@ WHERE rb.groupJID = 4 and rb.br_status in ('0','1')
                                                             <th>ตำแหน่ง</th>
                                                             <th>ประเภทบ้าน</th>
                                                             <th>วันที่ขอบ้าน</th>
-                                                            <th>บันพักปัจจุบัน</th>
+                                                            <th>บัานพักปัจจุบัน</th>
                                                             <th>เหตุผล</th>
+                                                            <th>บ้านพัก</th>
                                                             <th>สมาชิก</th>
                                                             <th>กระบวนการ</th>
                                                         </tr>
@@ -632,6 +649,7 @@ rb.brhome_id,
 	rb.borrow_date,
 	rb.remark_br,
 	rh.reghome_name,
+	rh2.reghome_name as 'reghome_name2',
 	rb.br_status
 FROM
 	resthome.borrowhome rb
@@ -639,7 +657,8 @@ FROM
 	JOIN mainlogin.prename mpn ON mp.ID_Prename = mpn.ID_Prename
 	left join	resthome.typefamily rf on rf.typef_id = rb.typef_id
 	left join resthome.resgisterhome rh on rh.reghome_id = rb.reghome_id
-WHERE rb.groupJID = 5 and rb.br_status in ('0','1')
+	left join resthome.resgisterhome rh2 on rh2.reghome_id = rb.reghome_new
+WHERE rb.groupJID = 5 and rb.br_status in ('2','4')
 ";
                                                         $results = $mysql->selectAll($sql);
 
@@ -654,6 +673,7 @@ WHERE rb.groupJID = 5 and rb.br_status in ('0','1')
                                                                 <td><?= $value['borrow_date'] ?></td>
                                                                 <td><?= $value['reghome_name'] ?></td>
                                                                 <td><?= $value['remark_br'] ?></td>
+                                                                <td><?= $value['reghome_name2'] ?></td>
                                                                 <td> <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default<?=$value['brhome_id']?>">
                                                                         ดูรายชื่อ
                                                                     </button>
@@ -711,18 +731,17 @@ WHERE rb.groupJID = 5 and rb.br_status in ('0','1')
                                                                 <td>
                                                                     <div>
                                                                         <?php
-                                                                        if($value['br_status'] == 0){
-                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-success receipt_br">รับเอกสาร</button>
-                                                                        <button type="button" id="'.$value['brhome_id'].'" class="btn btn-info cancer_br">ยกเลิก</button>';
-                                                                        }else if ($value['br_status'] == 1){
-                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-warning approve_br">อนุมัติเอกสาร</button>
-                                                                        <button type="button" id="'.$value['brhome_id'].'" class="btn btn-info cancer_br">ยกเลิก</button>';
-                                                                        }else if ($value['br_status'] == 2){
-                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-info cancer_br">ยกเลิก</button>';
-                                                                        }else{
-
+                                                                        if($value['br_status'] == 2){
+                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-warning select_br">เลือกบ้าน</button>
+                                                                        <button type="button" id="'.$value['brhome_id'].'" class="btn btn-danger cancer_br">ยกเลิก</button>';
+                                                                        }else if ($value['br_status'] == 4){
+                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-info welcome_br">รับเข้าบ้าน</button>
+                                                                    <button type="button" id="'.$value['brhome_id'].'" class="btn btn-danger cancer_br">ยกเลิก</button>';
                                                                         }
                                                                         ?>
+
+
+
                                                                     </div>
                                                                 </td>
                                                             </tr>

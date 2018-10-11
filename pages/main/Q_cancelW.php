@@ -56,7 +56,8 @@
                                                             <th>ประเภทบ้าน</th>
                                                             <th>วันที่ขอบ้าน</th>
                                                             <th>บัานพักปัจจุบัน</th>
-                                                            <th>โซน</th>
+                                                            <th>เหตุผล</th>
+                                                            <th>บ้านพัก</th>
                                                             <th>สมาชิก</th>
                                                             <th>กระบวนการ</th>
                                                         </tr>
@@ -75,6 +76,7 @@ rb.brhome_id,
 	rb.borrow_date,
 	rb.remark_br,
 	rh.reghome_name,
+	rh2.reghome_name as 'reghome_name2',
 	rb.br_status
 FROM
 	resthome.borrowhome rb
@@ -82,7 +84,8 @@ FROM
 	JOIN mainlogin.prename mpn ON mp.ID_Prename = mpn.ID_Prename
 	left join	resthome.typefamily rf on rf.typef_id = rb.typef_id
 	left join resthome.resgisterhome rh on rh.reghome_id = rb.reghome_id
-WHERE rb.groupJID = 1 and rb.br_status in ('2','3')
+	left join resthome.resgisterhome rh2 on rh2.reghome_id = rb.reghome_new
+WHERE rb.groupJID = 1 and rb.br_status in ('6')
 ";
                                                         $results = $mysql->selectAll($sql);
 
@@ -97,6 +100,7 @@ WHERE rb.groupJID = 1 and rb.br_status in ('2','3')
                                                                 <td><?= $value['borrow_date'] ?></td>
                                                                 <td><?= $value['reghome_name'] ?></td>
                                                                 <td><?= $value['remark_br'] ?></td>
+                                                                <td><?= $value['reghome_name2'] ?></td>
                                                                 <td> <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default<?=$value['brhome_id']?>">
                                                                         ดูรายชื่อ
                                                                     </button>
@@ -153,21 +157,7 @@ WHERE rb.groupJID = 1 and rb.br_status in ('2','3')
                                                                 </td>
                                                                 <td>
                                                                     <div>
-                                                                        <?php
-                                                                        if($value['br_status'] == 2){
-                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-warning select_br">คืนสถานะ</button>';
-                                                                        }else if ($value['br_status'] == 3){
-                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-warning welcome_br">รับเข้าบ้าน</button>
-                                                                    <button type="button" id="'.$value['brhome_id'].'" class="btn btn-info cancer_br">ยกเลิก</button>';
-                                                                        }else if ($value['br_status'] == 4){
-                                                                            echo '<button type="button" id="'.$value['brhome_id'].'" class="btn btn-info select_br">รับเข้าบ้าน</button>';
-                                                                        }else{
-
-                                                                        }
-                                                                        ?>
-
-
-
+                                                                        <button type="button" id="<?=$value['brhome_id']?>" class="btn btn-warning cancer_br">คือสถานะ</button>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -182,6 +172,7 @@ WHERE rb.groupJID = 1 and rb.br_status in ('2','3')
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                                 <!-- /.tab1 -->
                                 <div class="tab-pane" id="tab_2">
@@ -964,13 +955,12 @@ WHERE rb.groupJID = 5 and rb.br_status in ('0','1')
             $.ajax({
                 url:'update_br.php',
                 method:'POST',
-                data:{id:this.id,action:3},
+                data:{id:this.id,action:2},
                 success:function (data) {
                     console.log(data);
                     if(data == 1){
                         toastr.success('ยกเลิกเอกสารเรียบร้อยแล้วค่ะ');
                         setInterval(function(){ location.reload(); }, 2000);
-
                     }else{
                         toastr.success('ยกเลิกเอกสารมีปัญหาติดต่อผู้พัฒนาระบบค่ะ');
                     }
